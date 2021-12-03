@@ -113,16 +113,27 @@ namespace sdds {
         }
         return is;
     }
-    std::ostream& Date::write(std::ostream& os) const {
+    std::ostream& Date::write(std::ostream& os, bool showFileFormat) const {
         if (bad()) {
             cout << dateStatus();
         }
-        else {
+        else if (!showFileFormat){
             os << m_year << "/";
             os.setf(ios::right);
             os.width(2);
             os.fill('0');
             os << m_mon << "/";
+            os.width(2);
+            os << m_day;
+            os.unsetf(ios::right);
+            os.fill(' ');
+        }
+        else {
+            os << m_year << "-";
+            os.setf(ios::right);
+            os.width(2);
+            os.fill('0');
+            os << m_mon << "-";
             os.width(2);
             os << m_day;
             os.unsetf(ios::right);

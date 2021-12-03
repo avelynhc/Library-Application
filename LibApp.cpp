@@ -3,8 +3,8 @@
 // OOP244 LibApp Module
 // File	LibApp.cpp
 // Version 1.0
-// Date	2021-11-
-// Author	
+// Date	2021-12-02
+// Author
 // Description
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
@@ -33,8 +33,7 @@ namespace sdds {
 	}
 	void LibApp::load() {
 		cout << "Loading Data" << endl;
-		ifstream infile("LibRecsSmall.txt");
-		//Publication* p[1000]{};
+		ifstream infile("LibRecs.txt");
 		char type{};
 		for (int i = 0; infile; i++) {
 			infile >> type;
@@ -55,7 +54,7 @@ namespace sdds {
 	void LibApp::save() {
 		cout << "Saving Data" << endl;
 		cout << endl;
-		ofstream fileout("LibRecsSmall.txt", ios::trunc);
+		ofstream fileout("LibRecs.txt", ios::trunc);
 		for (int i = 0; i < m_NumOfLoadedPublic; i++) {
 			if (fileout && m_publicPointerArray[i]) {
 				if (m_publicPointerArray[i]->getRef()) { // when reference number is not zero, save it
@@ -68,19 +67,16 @@ namespace sdds {
 		cout << "Thanks for using Seneca Library Application" << endl;
 		for (int i = 0; i < m_NumOfLoadedPublic; i++) {
 			if (m_publicPointerArray[i] && m_publicPointerArray[i]->getRef()) {
-				m_publicPointerArray[i]->write(cout,true) << endl;
+				m_publicPointerArray[i]->write(cout, true) << endl;
 			}
 		}
 	}
 	int LibApp::search(int userInput, bool onLoan, bool showAll) {
-		//PublicationSelector* ps[1000]{};
 		char title[256];
 		int ref = 0;
-		//int userInput = m_pubTypeMenu.run(); //get the type of publication to search for from the user
 		cout << "Publication Title: ";
 		cin.getline(title, 256);
 		PublicationSelector ps("Select one of the following found matches:");
-		//Publication* P[1000]{};
 		for (int i = 0; i < m_NumOfLoadedPublic; i++) {
 			// when book 
 			if (m_publicPointerArray[i] && userInput == 1 && strstr(*m_publicPointerArray[i], title) && m_publicPointerArray[i]->type() == 'B') {
@@ -153,7 +149,7 @@ namespace sdds {
 						cout.setf(ios::fixed);
 						cout.precision(2);
 						cout << penalty;
-						cout << " for being " << overDue << " days late!" << endl;
+						cout << " penalty for being " << overDue << " days late!" << endl;
 					}
 					m_publicPointerArray[i]->set(0);// set membership num of publication to 0
 					m_changed = true;
@@ -168,84 +164,77 @@ namespace sdds {
 		}
 		else {
 			Publication* P{};
-			cout << "Adding new publication to library" << endl;
+			cout << "Adding new publication to the library" << endl;
 			int userInput = m_pubTypeMenu.run();
-			//for (int i = 0; i < m_NumOfLoadedPublic; i++) {
-				if (userInput == 1) {// when user's choice = Book
-					P = new Book;
-					P->read(cin);
-					if (!cin) {
-						cin.clear();
-						cin.ignore(10000, '\n');
-						cout << "Aborted!" << endl;
-					}
-					else {
-						if (confirm("Add this publication to library?")) {
-							if (P) {
-								P->setRef(++m_lastLibRefNum);
-								m_publicPointerArray[m_NumOfLoadedPublic++] = P;
-								m_changed = true;
-								cout << "Publication added" << endl;
-							}
-							else {
-								cout << "Failed to add publication!" << endl;
-								for (int i = 0; P[i]; i++) { 
-									delete P[i];
-								}
-							}
-						}
-						else {
-							cout << "Aborted!" << endl;
-						}
-					}
-				}
-				else if (userInput == 2) {// when user's choice = Publication
-					P = new Publication;
-					P->read(cin);
-					if (!cin) {
-						cin.clear();
-						cin.ignore(10000, '\n');
-						cout << "Aborted!" << endl;
-					}
-					else {
-						if (confirm("Add this publication to library?")) {
-							if (P) {
-								//set the library reference number to the value
-								P->setRef(++m_lastLibRefNum);
-								m_publicPointerArray[m_NumOfLoadedPublic++] = P;
-								m_changed = true;
-								cout << "Publication added" << endl;
-							}
-							else {
-								cout << "Failed to add publication!" << endl;
-								for (int i = 0; P[i]; i++) { 
-									delete P[i];
-								}
-							}
-						}
-						else {
-							cout << "Aborted!" << endl;
-						}
-					}
-				}
-				else if (userInput == 0) {
+			if (userInput == 1) {// when user's choice = Book
+				P = new Book;
+				P->read(cin);
+				if (!cin) {
+					cin.clear();
+					cin.ignore(10000, '\n');
 					cout << "Aborted!" << endl;
 				}
-			//}
+				else {
+					if (confirm("Add this publication to the library?")) {
+						if (P) {
+							P->setRef(++m_lastLibRefNum);
+							m_publicPointerArray[m_NumOfLoadedPublic++] = P;
+							m_changed = true;
+							cout << "Publication added" << endl;
+						}
+						else {
+							cout << "Failed to add publication!" << endl;
+							for (int i = 0; P[i]; i++) {
+								delete P[i];
+							}
+						}
+					}
+					else {
+						cout << "Aborted!" << endl;
+					}
+				}
+			}
+			else if (userInput == 2) {// when user's choice = Publication
+				P = new Publication;
+				P->read(cin);
+				if (!cin) {
+					cin.clear();
+					cin.ignore(10000, '\n');
+					cout << "Aborted!" << endl;
+				}
+				else {
+					if (confirm("Add this publication to the library?")) {
+						if (P) {
+							//set the library reference number to the value
+							P->setRef(++m_lastLibRefNum);
+							m_publicPointerArray[m_NumOfLoadedPublic++] = P;
+							m_changed = true;
+							cout << "Publication added" << endl;
+						}
+						else {
+							cout << "Failed to add publication!" << endl;
+							for (int i = 0; P[i]; i++) {
+								delete P[i];
+							}
+						}
+					}
+					else {
+						cout << "Aborted!" << endl;
+					}
+				}
+			}
+			else if (userInput == 0) {
+				cout << "Aborted!" << endl;
+			}
 		}
 	}
 	void LibApp::removePublication() {
-		cout << "Removing publication from library" << endl;
+		cout << "Removing publication from the library" << endl;
 		int userInput = m_pubTypeMenu.run();
-		int seletecdRef = search(userInput,true, true); // search all publication
+		int seletecdRef = search(userInput, true, true); // search all publication
 		if (seletecdRef) {
 			if (confirm("Remove this publication from the library?")) {
 				//Set the library reference of the selected publication to 0 (zero) -- deleting it
-				//for (int i = 0; i < m_NumOfLoadedPublic; i++) {
-				//	if (seletecdRef == m_publicPointerArray[i]->getRef()) {
-				//		m_publicPointerArray[i]->setRef(0);
-				//	}
-				//}
 				getPub(seletecdRef)->setRef(0);
 				m_changed = true;
 				cout << "Publication removed" << endl;
@@ -256,7 +245,7 @@ namespace sdds {
 		int membershipNum;
 		cout << "Checkout publication from the library" << endl;
 		int userInput = m_pubTypeMenu.run();
-		int seletecdRef = search(userInput,false);
+		int seletecdRef = search(userInput, false);
 		if (seletecdRef) {
 			if (userInput && confirm("Check out publication?")) {
 				bool flag = false;
@@ -268,24 +257,11 @@ namespace sdds {
 					cin >> membershipNum;
 					flag = membershipNum > 99999;
 				}
-				//set the membership number of the selected publication the integer value.
-				//for (int i = 0; i < m_NumOfLoadedPublic; i++) {
-				//	if (seletecdRef == m_publicPointerArray[i]->getRef()) {
-				//		m_publicPointerArray[i]->set(membershipNum);
-				//	}
-				//}
 				getPub(seletecdRef)->set(membershipNum);
-
 				m_changed = true;
 				cout << "Publication checked out" << endl;
 			}
 		}
-	}
-	LibApp::LibApp(bool changed, Menu mainMenu, Menu pubTypeMenu, Menu exitMenu) : m_changed(changed), m_mainMenu(mainMenu), m_pubTypeMenu(pubTypeMenu), m_exitMenu(exitMenu) {
-		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
-		m_pubTypeMenu << "Book" << "Publication";
-		m_exitMenu << "Save changes and exit" << "Cancel and go back to the main menu";
-		load();
 	}
 	void LibApp::run() {
 		bool res = false;
@@ -304,10 +280,9 @@ namespace sdds {
 							cout << endl;
 							cout << "-------------------------------------------" << endl;
 							cout << "Thanks for using Seneca Library Application" << endl;
-							for (int i = 0; i < m_NumOfLoadedPublic; i++) {
-								if (m_publicPointerArray[i] && m_publicPointerArray[i]->getRef()) {
-									m_publicPointerArray[i]->write(cout, true) << endl;
-								}
+							ifstream file("LibRecs.txt");
+							if (file.is_open()) {
+								cout << file.rdbuf();
 							}
 						}
 					}
@@ -337,8 +312,6 @@ namespace sdds {
 				cout << endl;
 			}
 		} while (!res);
-		//cout << "-------------------------------------------" << endl;
-		//cout << "Thanks for using Seneca Library Application" << endl;
 	}
 	Publication* LibApp::getPub(int libRef) {
 		for (int i = 0; i < m_NumOfLoadedPublic; i++) {
@@ -356,5 +329,10 @@ namespace sdds {
 		m_pubTypeMenu << "Book" << "Publication";
 		m_exitMenu << "Save changes and exit" << "Cancel and go back to the main menu";
 		load();
+	}
+	LibApp::~LibApp() {
+		for (int i = 0; i < SDDS_LIBRARY_CAPACITY; i++) {
+			delete m_publicPointerArray[i];
+		}
 	}
 }

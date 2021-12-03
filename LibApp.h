@@ -3,7 +3,7 @@
 // OOP244 LibApp Module
 // File	LibApp.h
 // Version 1.0
-// Date	2021-11-
+// Date	2021-12-02
 // Author	
 // Description
 -----------------------------------------------------------
@@ -23,14 +23,15 @@ that my professor provided to complete my workshops and assignments.
 namespace sdds {
     class LibApp{
         bool m_changed{};
-        Menu m_mainMenu{};
-        Menu m_exitMenu{};
+        Menu m_mainMenu;
+        Menu m_pubTypeMenu;
+        Menu m_exitMenu;
 
         char m_fileName[256]{};
         Publication* m_publicPointerArray[SDDS_LIBRARY_CAPACITY]{};//PPA
         int m_NumOfLoadedPublic{};//NOLP
         int m_lastLibRefNum{};//LLRN
-        Menu m_pubTypeMenu{};
+
         bool confirm(const char* message);
         void load();
         void save();
@@ -40,10 +41,10 @@ namespace sdds {
         void removePublication();
         void checkOutPub();
     public:
-        LibApp(bool changed = false, Menu mainMenu = "Seneca Libray Application", Menu pubTypeMenu = "Choose the type of publication:", Menu exitMenu = "Changes have been made to the data, what would you like to do?");
         void run();
         Publication* getPub(int libRef);
-        LibApp(const char* filename, bool changed = false, Menu mainMenu = "Seneca Libray Application", Menu pubTypeMenu = "Choose the type of publication:", Menu exitMenu = "Changes have been made to the data, what would you like to do?");
+        LibApp(const char* filename, bool changed = false, Menu mainMenu = "Seneca Library Application", Menu pubTypeMenu = "Choose the type of publication:", Menu exitMenu = "Changes have been made to the data, what would you like to do?");
+        virtual ~LibApp();
     };
 }
 #endif // !SDDS_LIBAPP_H

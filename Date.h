@@ -51,7 +51,7 @@ namespace sdds {
         const char* dateStatus()const;  // returns a string corresponding the current status of the date
         int currentYear()const;         // returns the m_CUR_YEAR value;
         std::istream& read(std::istream& is = std::cin);
-        std::ostream& write(std::ostream& os = std::cout)const;
+        std::ostream& write(std::ostream& os = std::cout, bool showFileFormat=false)const;
         bool operator==(const Date& Ro)const;
         bool operator!=(const Date& Ro)const;
         bool operator>=(const Date& Ro)const;

@@ -3,7 +3,7 @@
 // OOP244 Pulication Module
 // File	Publication.cpp
 // Version 1.0
-// Date 2021-11-23
+// Date 2021-12-02
 // Author 
 // Description
 -----------------------------------------------------------
@@ -110,9 +110,9 @@ namespace sdds {
 			ostr.unsetf(ios::left);
 		}
 		else {
-			ostr << type() << "\t" << m_libRef << "\t" << m_shelfId << "\t" << m_title << "\t" << m_membership << "\t" << m_date;
+			ostr << type() << "\t" << m_libRef << "\t" << m_shelfId << "\t" << m_title << "\t" << m_membership << "\t";
+			m_date.write(ostr,true);
 		}
-		//ostr << type() << "\t" << m_libRef << "\t" << m_shelfId << "\t" << m_title << "\t" << m_membership << "\t" << m_date;
 		return ostr;
 	}
 	std::istream& Publication::read(std::istream& istr) {

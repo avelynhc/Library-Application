@@ -3,7 +3,7 @@
 // OOP244 Book Module
 // File	Book.cpp
 // Version 1.0
-// Date 2021-11-23
+// Date 2021-12-02
 // Author 
 // Description
 -----------------------------------------------------------
@@ -60,7 +60,6 @@ namespace sdds {
 		else {
 			ostr << "\t" << m_authorName;
 		}
-		//ostr << "\t" << m_authorName;
 		return ostr;
 	}
 	std::istream& Book::read(std::istream& istr) {
